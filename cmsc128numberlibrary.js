@@ -1,3 +1,10 @@
+//Colin James P. Naranjo
+//CMSC128 AB-4L
+//Assignment
+//Programming A Number Library
+
+
+
 var number;                                                             //Variables for all functions
 var temp;
 var i = 0;
@@ -527,12 +534,12 @@ function wordstonum(source) {                                   //Works for conv
 function numdel(source) {
     number = document.getElementById("numdelimitedinput1").value;                            //Puts the value into "number" variable                     
     if (number > 1000000) {
-        number = document.getElementById("numdelimitedinput1").value = 1000000;
+        number = document.getElementById("numdelimitedinput1").value = 1000000;                 //Checks if it exceeds limit
     }
     if (number < 0) {
         number = document.getElementById("numdelimitedinput1").value = 0;
     }
-    if (document.getElementById("numdelimitedinput1").value == "" || 
+    if (document.getElementById("numdelimitedinput1").value == "" ||                            //Checks if there are missing inputs and other anomalies
         document.getElementById("numdelimitedinput2").value == "" ||
         document.getElementById("numdelimitedinput3").value == "" ){
             alert("Missing Input!");
@@ -542,9 +549,9 @@ function numdel(source) {
         } else if (document.getElementById("numdelimitedinput3").value > document.getElementById("numdelimitedinput1").value.length || document.getElementById("numdelimitedinput3").value < 0) {
             alert("The number of jumps has exceeded");
         } else {
-            temp = document.getElementById("numdelimitedinput1").value.length - document.getElementById("numdelimitedinput3").value;
+            temp = document.getElementById("numdelimitedinput1").value.length - document.getElementById("numdelimitedinput3").value;            
             number = (document.getElementById("numdelimitedinput1").value + "").split("");
-            number.splice(temp, 0, document.getElementById("numdelimitedinput2").value);
+            number.splice(temp, 0, document.getElementById("numdelimitedinput2").value);                    //Splits the integer, inserts delimiter then join again then print
             document.getElementById("numdelimitedoutput").value = number.join("");
         }
     }
