@@ -5,6 +5,10 @@ var words;
 var wordinput;
 var wordtemp;
 var wordconvert = "";
+var wordconvert2 = "";
+var wordconverttemp = "";
+var delimiter;
+var index;
 function numtowords(source) {
     number = document.getElementById("numbertowordsinput").value;                           //Puts the value into "number" variable
     if (number !== "") {                                                                    //Checks if it exceeds the limits
@@ -160,12 +164,13 @@ function numtowords(source) {
     }
 }
 
-function enterword(source) {                                                                        //Adds to the number to be converted
-    alert(document.getElementById(source).value);
-    if (document.getElementById(source).value == enterwordtonum) {
+function enterword(source) {                                                             //Works for converting words to num and words to currency
+    if (source.id == "enterwordtonum") {
         wordinput = document.getElementById("wordstonum").value;
-    } else if (document.getElementById(source).value == enterwordtocurr) {
+        wordconvert = wordconverttemp;
+    } else if (source.id == "enterwordtocurr") {
         wordinput = document.getElementById("wordstonum2").value;
+        wordconvert = wordconvert2;
     }
 
     if (wordinput == "zero" ||                                                                  //For inputting ones digit
@@ -293,44 +298,56 @@ function enterword(source) {                                                    
         } else alert("Invalid!");
     }
 
-    if (wordinput == "hundred" || wordinput == "thousand" || wordinput == "million") {                  //Hundreds, thousands, and millions can only follow ones digits
-        if (wordinput == "million") wordconvert = "one million";                                         //Two "hundreds" or "thousands" can't exist at the same time
-        else if ((wordinput == "hundred" && wordconvert.split(" ").indexOf("hundred") != -1 && wordconvert.split(" ").indexOf("thousand") == -1) ||
+    if (wordinput == "hundred") {                                                //Hundreds, thousands, and millions can only follow ones digits                                                                        
+        if ((wordinput == "hundred" && wordconvert.split(" ").indexOf("hundred") != -1 && wordconvert.split(" ").indexOf("thousand") == -1) ||
            (wordinput == "thousand" && wordconvert.split(" ").indexOf("thousand") != -1) || wordconvert.split(" ").indexOf("million") != -1) {
-            alert("Invalid!");
+            alert("Invalid!");                                                      //Two "hundreds" or "thousands" can't exist at the same time
         } else if (wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "one" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "two" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "three" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "four" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "five" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "six" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "seven" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "eight" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "nine" ||
-           wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "hundred") {
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "two" ||
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "three" ||
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "four" ||
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "five" ||
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "six" ||
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "seven" ||
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "eight" ||
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "nine" ||
+                wordconvert.split(" ")[wordconvert.split(" ").length - 2] == "hundred") {
             wordconvert = wordconvert + wordinput + " ";
-        } else alert("Invalid!");
+        } else alert("Invalid!");                         
     }
-    if (document.getElementById(source).value == enterwordtonum) {                                          //Puts into the first gray field aftwerwards
+    if (wordinput == "thousand" || wordinput == "million") {                  
+        if (wordinput == "million") wordconvert = "one million";
+        else if ((wordinput == "thousand" && wordconvert.split(" ").indexOf("thousand") != -1) || wordconvert.split(" ").indexOf("million") != -1) {
+            alert("Invalid!");
+        } else wordconvert = wordconvert + wordinput + " ";
+    }
+    if (source.id == "enterwordtonum") {                                          //Puts into the first gray field aftwerwards
         document.getElementById("wordstonumberinput").value = wordconvert;
-    } else if (document.getElementById(source).value == enterwordtocurr) {
+        wordconverttemp = wordconvert;
+    } else if (source.id == "enterwordtocurr") {
         document.getElementById("wordstocurrencyinput2").value = wordconvert;
+        wordconvert2 = wordconvert;
     } 
 }
 
-function reset(source) {  
-    if(document.getElementById(source).value == resetwordtonum){
-        wordconvert = "";
+function reset(source) {                                         //Works for converting words to num and words to currency
+    if (source.id == "resetwordtonum") {
+        wordconverttemp = "";
         document.getElementById("wordstonumberinput").value = "";  
         document.getElementById("wordstonumberoutput").value = "";
-    }else if(document.getElementById(source).value == resetwordtocurr){
+    } else if (source.id == "resetwordtocurr") {
         wordconvert2 = "";
         document.getElementById("wordstocurrencyinput2").value = "";  
         document.getElementById("wordstocurrencyoutput").value = "";
     }
 }
 
-function wordstonum(source) {
+function wordstonum(source) {                                   //Works for converting words to num and words to currency
+    if (source.id == "wordtonumbutton") {
+        wordconvert = wordconverttemp;
+    } else if (source.id == "wordstocurrency") {
+        wordconvert = wordconvert2;
+    }
     wordtemp = wordconvert.split(" ");
     words = "";
     for (i = 0; i <= wordtemp.length - 2; i++) {
@@ -382,6 +399,7 @@ function wordstonum(source) {
                 break;
             case "ten":
                 if (wordtemp[i - 1] == "thousand") words = words + "010";                  //Converts ten to nineteen
+                else if (wordtemp[i + 1] == "thousand") words = words + "10";
                 else words = words + "10";
                 break;
             case "eleven":
@@ -422,48 +440,46 @@ function wordstonum(source) {
                 break;
             case "twenty":
                 if (wordtemp[i - 1] == "thousand") words = words + "02";                       //Converts the tens digit
+                else if (wordtemp[i + 1] == "thousand") words = words + "20";
                 else words = words + "2";
                 break;
             case "thirty":
                 if (wordtemp[i - 1] == "thousand") words = words + "03";
+                else if (wordtemp[i + 1] == "thousand") words = words + "30";
                 else words = words + "3";
                 break;
             case "forty":
                 if (wordtemp[i - 1] == "thousand") words = words + "04";
+                else if (wordtemp[i + 1] == "thousand") words = words + "40";
                 else words = words + "4";
                 break;
             case "fifty":
                 if (wordtemp[i - 1] == "thousand") words = words + "05";
+                else if (wordtemp[i + 1] == "thousand") words = words + "50";
                 else words = words + "5";
                 break;
             case "sixty":
                 if (wordtemp[i - 1] == "thousand") words = words + "06";
+                else if (wordtemp[i + 1] == "thousand") words = words + "60";
                 else words = words + "6";
                 break;
             case "seventy":
                 if (wordtemp[i - 1] == "thousand") words = words + "07";
+                else if (wordtemp[i + 1] == "thousand") words = words + "70";
                 else words = words + "7";
                 break;
             case "eighty":
                 if (wordtemp[i - 1] == "thousand") words = words + "08";
+                else if (wordtemp[i + 1] == "thousand") words = words + "80";
                 else words = words + "8";
                 break;
             case "ninety":
                 if (wordtemp[i - 1] == "thousand") words = words + "09";
+                else if (wordtemp[i + 1] == "thousand") words = words + "90";
                 else words = words + "9";
                 break;
             case "thousand":                                                //Converts the thousands
-                if (wordtemp[i - 1] == "ten" ||
-                    wordtemp[i - 1] == "twelve" ||
-                    wordtemp[i - 1] == "thirteen" ||
-                    wordtemp[i - 1] == "fourteen" ||
-                    wordtemp[i - 1] == "fifteen" ||
-                    wordtemp[i - 1] == "sixteen" ||
-                    wordtemp[i - 1] == "seventewn" ||
-                    wordtemp[i - 1] == "eighteen" ||
-                    wordtemp[i - 1] == "nineteen") {
-                    words = words + "0";
-                } else if (wordtemp[i - 1] == "hundred") {
+                if (wordtemp[i - 1] == "hundred") {
                     words = words + "00";
                 }
                 break;
@@ -486,11 +502,53 @@ function wordstonum(source) {
     } else if (wordtemp[wordtemp.length - 1] == "million") {
         words = words + "000000";
     }
-    document.getElementById("wordstonumberoutput").value = words;                           //Once finished, the output will be printed
+    if (source.id == "wordtonumbutton") {                                          //Puts into the first gray field aftwerwards
+        document.getElementById("wordstonumberoutput").value = words;
+        wordconverttemp = wordconvert;
+    } else if (source.id == "wordstocurrency") {
+        switch (document.getElementById("wordstocurrencyinput1").value) {
+            case "USD":
+                words = "USD" + words;
+                break;
+            case "PHP":
+                words = "PHP" + words;
+                break;
+            case "JPY":
+                words = "JPY" + words;
+                break;
+        }
+        document.getElementById("wordstocurrencyoutput").value = words;                  //Once finished, the output will be printed
+        wordconvert2 = wordconvert;
+    }
+                           
 }
 
 
-/*function wordstocurr(document.getElementById("wordstocurrencyinput1").value, document.getElementById("wordstocurrencyinput2").value) {
-    wordinput = document.getElementById("wordstocurrencyinput1").value;
-    number = document.getElementById("wordstocurrencyinput2").value;
-}*/
+function numdel(source) {
+    number = document.getElementById("numdelimitedinput1").value;                            //Puts the value into "number" variable                     
+    if (number > 1000000) {
+        number = document.getElementById("numdelimitedinput1").value = 1000000;
+    }
+    if (number < 0) {
+        number = document.getElementById("numdelimitedinput1").value = 0;
+    }
+    if (document.getElementById("numdelimitedinput1").value == "" || 
+        document.getElementById("numdelimitedinput2").value == "" ||
+        document.getElementById("numdelimitedinput3").value == "" ){
+            alert("Missing Input!");
+    }else{
+        if (document.getElementById("numdelimitedinput2").value.length > 1) {
+            alert("Only one character for delimiter");
+        } else if (document.getElementById("numdelimitedinput3").value > document.getElementById("numdelimitedinput1").value.length || document.getElementById("numdelimitedinput3").value < 0) {
+            alert("The number of jumps has exceeded");
+        } else {
+            temp = document.getElementById("numdelimitedinput1").value.length - document.getElementById("numdelimitedinput3").value;
+            number = (document.getElementById("numdelimitedinput1").value + "").split("");
+            number.splice(temp, 0, document.getElementById("numdelimitedinput2").value);
+            document.getElementById("numdelimitedoutput").value = number.join("");
+        }
+    }
+    
+    
+
+}

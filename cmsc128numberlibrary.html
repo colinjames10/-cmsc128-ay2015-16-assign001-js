@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Programming a Number Library</title>
+</head>
+<body>
+    <h1>Programming A Number Library</h1>
+   
+     <h3>Convert Number to Words</h3>
+    <p>Minimum of zero and maximum of one million.</p>
+    <p>Output will be placed in the gray area once button is pressed.</p>
+    <p>Enter the number in the text field.</p>
+   
+     <button type="button" onclick="numtowords(this)">
+        Number to Words
+    </button>
+    <input type="number" id="numbertowordsinput" min="0" max="1000000" />
+    <input disabled type="text" id="numbertowordsoutput" style="width:500px;"/>
+    <h3>Convert Words to Number</h3>
+   
+     <p>Enter the words by using the dropdown. Starts from left to right. <br />For ten, twenty, thirty, etc., enter the ones digit then the tens.<br />
+    For ten to nineteen, enter the tens first then the ones.</p>
+   
+     <button type="button" id="wordtonumbutton" onclick="wordstonum(this)">
+        Words to Number
+    </button>
+   
+     <select id="wordstonum">
+        <option>zero</option>
+        <option>one</option>
+        <option>two</option>
+        <option>three</option>
+        <option>four</option>
+        <option>five</option>
+        <option>six</option>
+        <option>seven</option>
+        <option>eight</option>
+        <option>nine</option>
+        <option>tens</option>
+        <option>hundred</option>
+        <option>thousand</option>
+        <option>million</option>
+    </select>
+   
+     <button id="enterwordtonum"  type="button" onclick="enterword(this)">
+        Enter Word
+    </button>
+    
+    <button id="resetwordtonum" type="button" onclick="reset(this)">
+        Reset Word
+    </button>
+   
+     <input disabled type="text" id="wordstonumberinput" style="width:500px;" />
+    <input disabled type="text" id="wordstonumberoutput" />
+   
+    <h3>Convert Words to Currency</h3>
+    <p>Pick the currency and enter the words by using the dropdown. Starts from left to right.</p>
+    
+    <button type="button" id="wordstocurrency" onclick="wordstonum(this)">
+        Words to Currency
+    </button>
+    
+    <select id="wordstocurrencyinput1">
+        <option id="usd">USD</option>
+        <option id="php">PHP</option>
+        <option id="jpy">JPY</option>
+    </select>
+    
+    <select id="wordstonum2">
+        <option>zero</option>
+        <option>one</option>
+        <option>two</option>
+        <option>three</option>
+        <option>four</option>
+        <option>five</option>
+        <option>six</option>
+        <option>seven</option>
+        <option>eight</option>
+        <option>nine</option>
+        <option>tens</option>
+        <option>hundred</option>
+        <option>thousand</option>
+        <option>million</option>
+    </select>
+    
+    <button id="enterwordtocurr" type="button" onclick="enterword(this)">
+        Enter Word
+    </button>
+    
+    <button id="resetwordtocurr" type="button" onclick="reset(this)">
+        Reset Word
+    </button>
+   
+     <input disabled type="text" id="wordstocurrencyinput2" style="width:500px;" />
+    <input disabled type="text" id="wordstocurrencyoutput"/>
+    
+    <h3>Number Delimited</h3>
+    
+    <p>Enter the number in the first text field, delimiter in the second, and the number of jumps where the delimiter will appear (starts from right to left).</p>
+    
+    <button type="button" id="numdelimited" onclick="numdel(this)">
+        Number Delimited
+    </button>
+    
+    <input type="number" id="numdelimitedinput1" min="0" max="1000000" />
+    <input type="text" id="numdelimitedinput2" min="1" max="1" />
+    <input type="number" id="numdelimitedinput3" min="0" max="7" />
+    
+    <input disabled type="text" id="numdelimitedoutput" />
+  <script src="cmsc128numberlibrary.js"></script>
+</body>
+</html>
